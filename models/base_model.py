@@ -1,9 +1,12 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 # this is the base model for the airbnb project
-""" this model defines all common attributes for other classes"""
+""" this model defines all
+common attributes for other classes
+"""
 
 import uuid
 from datetime import datetime
+
 
 class BaseModel:
     """this class class defines all
@@ -18,7 +21,8 @@ class BaseModel:
 
     def __str__(self):
         """the unofficial repr of this class"""
-        string = "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        string = "[{}] ({}) {}".format(self.__class__.__name__,
+                                       self.id, self.__dict__)
         return string
 
     def save(self):
