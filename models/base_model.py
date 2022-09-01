@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # this is the base model for the airbnb project
-""" this model defines all
+"""this model defines all
 common attributes for other classes
 """
 
@@ -13,11 +13,25 @@ class BaseModel:
     common attr for all other classes
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """the class constructor"""
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        if kwargs:
+            if 'id' in list(kwargs):
+                self.id = kwargs['id']
+            if 'updated_at' in list(kwargs):
+                self.updated_at = datetime.strptime(kwargs['updated_at'],
+                                                    '%Y-%m-%dT%H:%M:%S.%f')
+            if 'created_at' in list(kwargs):
+                self.created_at = datetime.strptime(kwargs['created_at'],
+                                                    '%Y-%m-%dT%H:%M:%S.%f')
+            if 'my_number' in list(kwargs):
+                self.my_number = kwargs['my_number']
+            if 'name' in list(kwargs):
+                self.name = kwargs['name']
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """the unofficial repr of this class"""

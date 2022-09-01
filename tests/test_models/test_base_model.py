@@ -16,8 +16,9 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(type(dic).__name__, "dict")
         self.assertIn('created_at', dic)
         self.assertIn('updated_at', dic)
-        self.assertIn('__class__', dic)
         self.assertEqual(dic['__class__'], 'BaseModel')
+        some_inst = BaseModel(**dic)
+        self.assertEqual(dic['id'], some_inst.to_dict()['id'])
 
     def test_save(self):
         """checks that the save method changes the updated time"""
