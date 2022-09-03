@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 # this is the base model for the airbnb project
 """this model defines all
 common attributes for other classes
