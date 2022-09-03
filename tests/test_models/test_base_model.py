@@ -9,6 +9,14 @@ from models.base_model import BaseModel
 class TestBaseModel(unittest.TestCase):
     """the basemodel test cases"""
 
+    def test___init__(self):
+        """tests the init method"""
+        new_guy = BaseModel()
+        new_guy.name = "the first"
+        new_guy.my_number = "1"
+        another_guy = BaseModel(**(new_guy.to_dict()))
+        self.assertEqual(new_guy.id, another_guy.id)
+
     def test_to_dict(self):
         """tests the to_dict instance method"""
         some_inst = BaseModel()
@@ -27,3 +35,7 @@ class TestBaseModel(unittest.TestCase):
         created_at = some_inst.created_at
         updated_at = some_inst.updated_at
         self.assertNotEqual(created_at, updated_at)
+
+    def test__str__(self):
+        """checks that the str method is fine"""
+        thisinst = BaseModel()
