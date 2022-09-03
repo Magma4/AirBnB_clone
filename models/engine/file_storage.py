@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """the file storage class:
 This class stores an istance into a file in JSON
 readable and writable by all programming languages
