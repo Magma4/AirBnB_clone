@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 # unittest for the base model
 """This tests cases are for the base model class"""
 
