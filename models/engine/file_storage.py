@@ -10,22 +10,30 @@ import os
 
 class FileStorage:
     """the file storage class define funcs to save to a file
-    in json and load to a python object
+    in json and load to a python object.
+    the all method returns all the objects and the new method adds
+    a new object
     """
     __file_path = "file.json"
     __objects = dict()
 
     def all(self):
-        """returns the dictionary __objects"""
+        """returns the dictionary __objects
+        as stored in the __objects variable upon creation
+        """
         return FileStorage.__objects
 
     def new(self, obj):
-        """sets in __objects the object with key objclassname.id"""
+        """sets in __objects the object with key
+        objclassname.id
+        """
         obj_key = "{:s}.{:s}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[obj_key] = obj
 
     def save(self):
-        """serializes __objects to the json file path __file_path"""
+        """serializes __objects to the json
+        file path __file_path
+        """
         obj_clone = dict.copy(FileStorage.__objects)
         for key, value in obj_clone.items():
             obj_clone[key] = value.to_dict()
@@ -33,7 +41,9 @@ class FileStorage:
             f.write(json.dumps(obj_clone))
 
     def reload(self):
-        """deserializes the json file to __objects if the json file exist"""
+        """deserializes the json file to
+        __objects if the json file exist
+        """
         if os.path.exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
                 obj_clone = json.loads(f.read())
