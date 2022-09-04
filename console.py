@@ -83,8 +83,8 @@ class HBNBCommand(cmd.Cmd):
             with open("file.json", "r", encoding="utf-8") as f:
                 dic = json.loads(f.read())
                 for key, value in dic.items():
-                    same_class = (dic[key])['__class__'] == list_of_cmds[0]
-                    if (dic[key])['id'] == list_of_cmds[1] and same_class:
+                    # same_class = (dic[key])['__class__'] == list_of_cmds[0]
+                    if (dic[key])['id'] == list_of_cmds[1]:
                         if (dic[key])['__class__'] == "BaseModel":
                             print(BaseModel(**value))
                         elif (dic[key])['__class__'] == "User":
@@ -122,8 +122,8 @@ class HBNBCommand(cmd.Cmd):
             with open("file.json", "r", encoding="utf-8") as f:
                 dic = json.loads(f.read())
                 for key, value in dic.items():
-                    same_class = (dic[key])['__class__'] == list_of_cmds[0]
-                    if (dic[key])['id'] == list_of_cmds[1] and same_class:
+                    # same_class = (dic[key])['__class__'] == list_of_cmds[0]
+                    if (dic[key])['id'] == list_of_cmds[1]:
                         del(dic[key])
                         break
             with open("file.json", "w", encoding="utf-8") as f:
@@ -185,8 +185,8 @@ class HBNBCommand(cmd.Cmd):
             with open("file.json", "r", encoding="utf-8") as f:
                 dic = json.loads(f.read())
                 for key, value in dic.items():
-                    same_class = (dic[key])['__class__'] == list_of_cmds[0]
-                    if same_class and ((dic[key])['id'] == list_of_cmds[1]):
+                    # same_class = (dic[key])['__class__'] == list_of_cmds[0]
+                    if ((dic[key])['id'] == list_of_cmds[1]):
                         if lenth_of_cmds < 3:
                             print("** attribute name missing **")
                             return
