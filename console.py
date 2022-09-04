@@ -83,8 +83,8 @@ class HBNBCommand(cmd.Cmd):
             with open("file.json", "r", encoding="utf-8") as f:
                 dic = json.loads(f.read())
                 for key, value in dic.items():
-                    # same_class = (dic[key])['__class__'] == list_of_cmds[0]
-                    if (dic[key])['id'] == list_of_cmds[1]:
+                    same_class = (dic[key])['__class__'] == list_of_cmds[0]
+                    if (dic[key])['id'] == list_of_cmds[1] and same_class:
                         if (dic[key])['__class__'] == "BaseModel":
                             print(BaseModel(**value))
                         elif (dic[key])['__class__'] == "User":
@@ -122,8 +122,8 @@ class HBNBCommand(cmd.Cmd):
             with open("file.json", "r", encoding="utf-8") as f:
                 dic = json.loads(f.read())
                 for key, value in dic.items():
-                    # same_class = (dic[key])['__class__'] == list_of_cmds[0]
-                    if (dic[key])['id'] == list_of_cmds[1]:
+                    same_class = (dic[key])['__class__'] == list_of_cmds[0]
+                    if (dic[key])['id'] == list_of_cmds[1] and same_class:
                         del(dic[key])
                         break
             with open("file.json", "w", encoding="utf-8") as f:
@@ -161,7 +161,7 @@ class HBNBCommand(cmd.Cmd):
                         objlist.append(str(Review(**value).__str__()))
                     elif value['__class__'] == "Amenity":
                         objlist.append(str(Amenity(**value).__str__()))
-        print(objlist)
+                print(objlist)
 
     def do_update(self, arg):
         """Updates an instance based on the
@@ -185,8 +185,8 @@ class HBNBCommand(cmd.Cmd):
             with open("file.json", "r", encoding="utf-8") as f:
                 dic = json.loads(f.read())
                 for key, value in dic.items():
-                    # same_class = (dic[key])['__class__'] == list_of_cmds[0]
-                    if ((dic[key])['id'] == list_of_cmds[1]):
+                    same_class = (dic[key])['__class__'] == list_of_cmds[0]
+                    if ((dic[key])['id'] == list_of_cmds[1]) and same_class:
                         if lenth_of_cmds < 3:
                             print("** attribute name missing **")
                             return
