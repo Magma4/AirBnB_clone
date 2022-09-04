@@ -49,9 +49,24 @@ class FileStorage:
                 obj_clone = json.loads(f.read())
                 from models.base_model import BaseModel
                 from models.user import User
+                from models.place import Place
+                from models.city import City
+                from models.state import State
+                from models.review import Review
+                from models.amenity import Amenity
                 for key, value in obj_clone.items():
                     if (obj_clone[key])['__class__'] == "BaseModel":
                         obj_clone[key] = BaseModel(**value)
                     elif (obj_clone[key])['__class__'] == "User":
                         obj_clone[key] = User(**value)
+                    elif (obj_clone[key])['__class__'] == "Place":
+                        obj_clone[key] = Place(**value)
+                    elif (obj_clone[key])['__class__'] == "City":
+                        obj_clone[key] = City(**value)
+                    elif (obj_clone[key])['__class__'] == "State":
+                        obj_clone[key] = State(**value)
+                    elif (obj_clone[key])['__class__'] == "Review":
+                        obj_clone[key] = Review(**value)
+                    elif (obj_clone[key])['__class__'] == "Amenity":
+                        obj_clone[key] = Amenity(**value)
                 FileStorage.__objects = dict.copy(obj_clone)

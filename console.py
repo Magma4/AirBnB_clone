@@ -8,7 +8,7 @@ import os
 import shlex
 from models.base_model import BaseModel
 from models.user import User
-from models.place import place
+from models.place import Place
 from models.city import City
 from models.state import State
 from models.review import Review
@@ -35,8 +35,8 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, arg):
         """creates a new object and saves it"""
         cmds = self.parseline(arg)
-        listclasses = ["BaseModel", "User", "Place", "City", "State", "Review"\
-                       , "Amenity"]
+        listclasses = ["BaseModel", "User", "Place", "City", "State",
+                       "Review", "Amenity"]
         if cmds[2] == '':
             print("** class name missing **")
             return
@@ -66,7 +66,8 @@ class HBNBCommand(cmd.Cmd):
         of an instance based on the class name and id
         """
         cmds = self.parseline(arg)
-        listclasses = ["BaseModel", "User"]
+        listclasses = ["BaseModel", "User", "Place", "City", "State",
+                       "Review", "Amenity"]
         if cmds[2] == '':
             print("** class name missing **")
             return
@@ -88,13 +89,24 @@ class HBNBCommand(cmd.Cmd):
                             print(BaseModel(**value))
                         elif (dic[key])['__class__'] == "User":
                             print(User(**value))
+                        elif (dic[key])['__class__'] == "Place":
+                            print(Place(**value))
+                        elif (dic[key])['__class__'] == "City":
+                            print(City(**value))
+                        elif (dic[key])['__class__'] == "State":
+                            print(State(**value))
+                        elif (dic[key])['__class__'] == "Review":
+                            print(Review(**value))
+                        elif (dic[key])['__class__'] == "Amenity":
+                            print(Amenity(**value))
                         return
         print("** no instance found **")
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
         cmds = self.parseline(arg)
-        listclasses = ["BaseModel", "User"]
+        listclasses = ["BaseModel", "User", "Place", "City", "State",
+                       "Review", "Amenity"]
         if cmds[2] == '':
             print("** class name missing **")
             return
@@ -139,6 +151,16 @@ class HBNBCommand(cmd.Cmd):
                         objlist.append(str(BaseModel(**value).__str__()))
                     elif value['__class__'] == "User":
                         objlist.append(str(User(**value).__str__()))
+                    elif value['__class__'] == "Place":
+                        objlist.append(str(Place(**value).__str__()))
+                    elif value['__class__'] == "City":
+                        objlist.append(str(City(**value).__str__()))
+                    elif value['__class__'] == "State":
+                        objlist.append(str(State(**value).__str__()))
+                    elif value['__class__'] == "Review":
+                        objlist.append(str(Review(**value).__str__()))
+                    elif value['__class__'] == "Amenity":
+                        objlist.append(str(Amenity(**value).__str__()))
         print(objlist)
 
     def do_update(self, arg):
@@ -146,7 +168,8 @@ class HBNBCommand(cmd.Cmd):
         class name and id by adding or updating attribute
         """
         cmds = self.parseline(arg)
-        listclasses = ["BaseModel", "User"]
+        listclasses = ["BaseModel", "User", "Place", "City", "State",
+                       "Review", "Amenity"]
         if cmds[2] == '':
             print("** class name missing **")
             return
