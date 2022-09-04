@@ -91,6 +91,62 @@ class HBNBCommand(cmd.Cmd):
                 return
         print("** no instance found **")
 
+    def do_all(self, arg):
+        """Prints all string representation
+        of all instances based or not on the class name
+        """
+        cmds = self.parseline(arg)
+        if cmds[2] != '':
+            list_of_cmds = cmds[2].split(" ")
+            if list_of_cmds[0] != "BaseModel":
+                print("** class doesn't exist **")
+                return
+        objlist = []
+        if os.path.exists("file.json"):
+            with open("file.json", "r", encoding="utf-8") as f:
+                obj = json.loads(f.read())
+                for key, value in obj.items():
+                    if value['__class__'] == "BaseModel":
+                        objlist.append(str(BaseModel(**value).__str__()))
+                print(objlist)
+
+    def do_update(self, arg):
+        """Updates an instance based on the
+        class name and id by adding or updating attribute
+        """
+        cmds = self.parseline(arg)
+        if cmds[2] == '':
+            print("** class name missing **")
+            return
+        list_of_cmds = cmds[2].split(" ")
+        lenth_of_cmds = len(list_of_cmds)
+        if list_of_cmds[0] != "BaseModel":
+            print("** class doesn't exist **")
+            return
+        if lenth_of_cmds == 1:
+            print("** instance id missing **")
+            return
+        if os.path.exists("file.json"):
+            with open("file.json", "r", encoding="utf-8") as f:
+                dic = json.loads(f.read())
+                for key, value in dic.items():
+                    if (dic[key])['id'] == list_of_cmds[1]:
+                        if lenth_of_cmds < 3:
+                            print("** attribute name missing **")
+                            return
+                        if lenth_of_cmds < 4:
+                            print("** value missing **")
+                            return
+                        try:
+                            (dic[key])[list_of_cmds[2]] = \
+                                json.loads(list_of_cmds[3])
+                        except Exception as e:
+                            (dic[key])[list_of_cmds[2]] = list_of_cmds[3]
+                        with open("file.json", "w", encoding="utf-8") as f:
+                            f.write(json.dumps(dic))
+                            return
+        print("** no instance found **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
