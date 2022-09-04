@@ -5,6 +5,7 @@ import cmd
 import sys
 import json
 import os
+import shlex
 from models.base_model import BaseModel
 
 
@@ -118,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
         if cmds[2] == '':
             print("** class name missing **")
             return
-        list_of_cmds = cmds[2].split(" ")
+        list_of_cmds = shlex.split(cmds[2])
         lenth_of_cmds = len(list_of_cmds)
         if list_of_cmds[0] != "BaseModel":
             print("** class doesn't exist **")
@@ -137,11 +138,9 @@ class HBNBCommand(cmd.Cmd):
                         if lenth_of_cmds < 4:
                             print("** value missing **")
                             return
-                        try:
-                            (dic[key])[list_of_cmds[2]] = \
-                                json.loads(list_of_cmds[3])
-                        except Exception as e:
-                            (dic[key])[list_of_cmds[2]] = list_of_cmds[3]
+
+                        stripped = list_of_cmds[3]
+                        (dic[key])[list_of_cmds[2]] = stripped
                         with open("file.json", "w", encoding="utf-8") as f:
                             f.write(json.dumps(dic))
                             return
