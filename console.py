@@ -8,6 +8,11 @@ import os
 import shlex
 from models.base_model import BaseModel
 from models.user import User
+from models.place import place
+from models.city import City
+from models.state import State
+from models.review import Review
+from models.amenity import Amenity
 
 
 class HBNBCommand(cmd.Cmd):
@@ -30,7 +35,8 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, arg):
         """creates a new object and saves it"""
         cmds = self.parseline(arg)
-        listclasses = ["BaseModel", "User"]
+        listclasses = ["BaseModel", "User", "Place", "City", "State", "Review"\
+                       , "Amenity"]
         if cmds[2] == '':
             print("** class name missing **")
             return
@@ -40,6 +46,16 @@ class HBNBCommand(cmd.Cmd):
                 new = BaseModel()
             elif list_of_cmds[0] == "User":
                 new = User()
+            elif list_of_cmds[0] == "Place":
+                new = Place()
+            elif list_of_cmds[0] == "City":
+                new = City()
+            elif list_of_cmds[0] == "State":
+                new = State()
+            elif list_of_cmds[0] == "Review":
+                new = Review()
+            elif list_of_cmds[0] == "Amenity":
+                new = Amenity()
             new.save()
             print(new.id)
         else:
