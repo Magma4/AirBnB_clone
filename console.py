@@ -7,6 +7,7 @@ import json
 import os
 import shlex
 from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -29,12 +30,16 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, arg):
         """creates a new object and saves it"""
         cmds = self.parseline(arg)
+        listclasses = ["BaseModel", "User"]
         if cmds[2] == '':
             print("** class name missing **")
             return
         list_of_cmds = cmds[2].split(" ")
-        if list_of_cmds[0] == "BaseModel":
-            new = BaseModel()
+        if list_of_cmds[0] in listclasses:
+            if list_of_cmds[0] == "BaseModel":
+                new = BaseModel()
+            elif list_of_cmds[0] == "User":
+                new = User()
             new.save()
             print(new.id)
         else:
@@ -45,12 +50,13 @@ class HBNBCommand(cmd.Cmd):
         of an instance based on the class name and id
         """
         cmds = self.parseline(arg)
+        listclasses = ["BaseModel", "User"]
         if cmds[2] == '':
             print("** class name missing **")
             return
         list_of_cmds = cmds[2].split(" ")
         lenth_of_cmds = len(list_of_cmds)
-        if list_of_cmds[0] != "BaseModel":
+        if list_of_cmds[0] not in listclasses:
             print("** class doesn't exist **")
             return
         if lenth_of_cmds == 1:
@@ -60,20 +66,25 @@ class HBNBCommand(cmd.Cmd):
             with open("file.json", "r", encoding="utf-8") as f:
                 dic = json.loads(f.read())
                 for key, value in dic.items():
-                    if (dic[key])['id'] == list_of_cmds[1]:
-                        print(BaseModel(**value))
+                    same_class = (dic[key])['__class__'] == list_of_cmds[0]
+                    if (dic[key])['id'] == list_of_cmds[1] and same_class:
+                        if (dic[key])['__class__'] == "BaseModel":
+                            print(BaseModel(**value))
+                        elif (dic[key])['__class__'] == "User":
+                            print(User(**value))
                         return
         print("** no instance found **")
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
         cmds = self.parseline(arg)
+        listclasses = ["BaseModel", "User"]
         if cmds[2] == '':
             print("** class name missing **")
             return
         list_of_cmds = cmds[2].split(" ")
         lenth_of_cmds = len(list_of_cmds)
-        if list_of_cmds[0] != "BaseModel":
+        if list_of_cmds[0] not in listclasses:
             print("** class doesn't exist **")
             return
         if lenth_of_cmds == 1:
@@ -83,8 +94,8 @@ class HBNBCommand(cmd.Cmd):
             with open("file.json", "r", encoding="utf-8") as f:
                 dic = json.loads(f.read())
                 for key, value in dic.items():
-                    f.mode = "w"
-                    if (dic[key])['id'] == list_of_cmds[1]:
+                    same_class = (dic[key])['__class__'] == list_of_cmds[0]
+                    if (dic[key])['id'] == list_of_cmds[1] and same_class:
                         del(dic[key])
                         break
             with open("file.json", "w", encoding="utf-8") as f:
@@ -97,9 +108,10 @@ class HBNBCommand(cmd.Cmd):
         of all instances based or not on the class name
         """
         cmds = self.parseline(arg)
+        listclasses = ["BaseModel", "User"]
         if cmds[2] != '':
             list_of_cmds = cmds[2].split(" ")
-            if list_of_cmds[0] != "BaseModel":
+            if list_of_cmds[0] not in listclasses:
                 print("** class doesn't exist **")
                 return
         objlist = []
@@ -109,19 +121,22 @@ class HBNBCommand(cmd.Cmd):
                 for key, value in obj.items():
                     if value['__class__'] == "BaseModel":
                         objlist.append(str(BaseModel(**value).__str__()))
-                print(objlist)
+                    elif value['__class__'] == "User":
+                        objlist.append(str(User(**value).__str__()))
+        print(objlist)
 
     def do_update(self, arg):
         """Updates an instance based on the
         class name and id by adding or updating attribute
         """
         cmds = self.parseline(arg)
+        listclasses = ["BaseModel", "User"]
         if cmds[2] == '':
             print("** class name missing **")
             return
         list_of_cmds = shlex.split(cmds[2])
         lenth_of_cmds = len(list_of_cmds)
-        if list_of_cmds[0] != "BaseModel":
+        if list_of_cmds[0] not in listclasses:
             print("** class doesn't exist **")
             return
         if lenth_of_cmds == 1:
@@ -131,7 +146,8 @@ class HBNBCommand(cmd.Cmd):
             with open("file.json", "r", encoding="utf-8") as f:
                 dic = json.loads(f.read())
                 for key, value in dic.items():
-                    if (dic[key])['id'] == list_of_cmds[1]:
+                    same_class = (dic[key])['__class__'] == list_of_cmds[0]
+                    if same_class and ((dic[key])['id'] == list_of_cmds[1]):
                         if lenth_of_cmds < 3:
                             print("** attribute name missing **")
                             return

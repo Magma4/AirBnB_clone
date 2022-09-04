@@ -48,7 +48,10 @@ class FileStorage:
             with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
                 obj_clone = json.loads(f.read())
                 from models.base_model import BaseModel
+                from models.user import User
                 for key, value in obj_clone.items():
                     if (obj_clone[key])['__class__'] == "BaseModel":
                         obj_clone[key] = BaseModel(**value)
+                    elif (obj_clone[key])['__class__'] == "User":
+                        obj_clone[key] = User(**value)
                 FileStorage.__objects = dict.copy(obj_clone)

@@ -17,18 +17,15 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """the class constructor"""
         if kwargs:
-            if 'id' in list(kwargs):
-                self.id = kwargs['id']
-            if 'updated_at' in list(kwargs):
-                self.updated_at = datetime.strptime(kwargs['updated_at'],
-                                                    '%Y-%m-%dT%H:%M:%S.%f')
-            if 'created_at' in list(kwargs):
-                self.created_at = datetime.strptime(kwargs['created_at'],
-                                                    '%Y-%m-%dT%H:%M:%S.%f')
-            if 'my_number' in list(kwargs):
-                self.my_number = kwargs['my_number']
-            if 'name' in list(kwargs):
-                self.name = kwargs['name']
+            for arg in kwargs.keys():
+                if arg == "__class__":
+                    continue
+                if arg == "updated_at" or arg == "created_at":
+                    value = datetime.strptime(kwargs[arg],
+                                              '%Y-%m-%dT%H:%M:%S.%f')
+                    setattr(self, arg, value)
+                else:
+                    setattr(self, arg, kwargs[arg])
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
