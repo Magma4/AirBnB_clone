@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Holberton AirBnB Console """
+""" Alx AirBnB Console """
 import cmd
 import sys
 import json
